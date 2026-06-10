@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brandwatch Extract Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-lockup">
+        <img src="assets/brandwatch-flow.svg" alt="" class="brand-mark" />
+        <div>
+          <h1>Brandwatch Extract Builder</h1>
+          <p>把 dashboard、日期、tab、chart 與回傳格式整理成可重複執行的擷取指令。</p>
+        </div>
+      </div>
+      <button class="icon-button" id="resetButton" type="button" title="重設表單" aria-label="重設表單">
+        <span aria-hidden="true">↺</span>
+      </button>
+    </header>
+
+    <main class="workspace">
+      <section class="panel form-panel" aria-labelledby="formTitle">
+        <h2 id="formTitle">擷取設定</h2>
+
+        <form id="extractForm">
+          <fieldset>
+            <legend>登入資訊</legend>
+            <div class="field-grid two">
+              <label>
+                <span>Brandwatch 帳號</span>
+                <input id="email" name="email" type="email" autocomplete="username" placeholder="name@company.com" />
+              </label>
+              <label>
+                <span>Brandwatch 密碼</span>
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="只供當次登入使用" />
+              </label>
+            </div>
+            <p class="hint">帳密不會存入瀏覽器、不會放進 GitHub，也不會出現在產生的指令中。</p>
+          </fieldset>
+
+          <fieldset>
+            <legend>Brandwatch Extract</legend>
+            <div class="field-grid">
+              <label>
+                <span>Dashboard</span>
+                <select id="dashboard" name="dashboard">
+                  <option value="【Test】Global Mention & Reach" selected>【Test】Global Mention & Reach</option>
+                  <option value="[IMC only] Global Mention & Reach">[IMC only] Global Mention & Reach</option>
+                  <option value="【System】Global Mention & Reach">【System】Global Mention & Reach</option>
+                  <option value="CIS - Reach">CIS - Reach</option>
+                  <option value="LATAM - Reach">LATAM - Reach</option>
+                  <option value="BR - Reach">BR - Reach</option>
+                  <option value="NA - Reach">NA - Reach</option>
+                  <option value="DACH - Reach">DACH - Reach</option>
+                  <option value="custom">自訂 dashboard</option>
+                </select>
+              </label>
+
+              <label class="hidden" id="customDashboardWrap">
+                <span>自訂 Dashboard</span>
+                <input id="customDashboard" name="customDashboard" type="text" placeholder="輸入 dashboard 名稱或 URL" />
+              </label>
+
+              <div class="field-grid two compact">
+                <label>
+                  <span>開始日期</span>
+                  <input id="startDate" name="startDate" type="date" value="2026-05-01" />
+                </label>
+                <label>
+                  <span>結束日期</span>
+                  <input id="endDate" name="endDate" type="date" value="2026-05-31" />
+                </label>
+              </div>
+
+              <label>
+                <span>Tab</span>
+                <select id="tabName" name="tabName">
+                  <option value="【Overall】4 Product Lines" selected>【Overall】4 Product Lines</option>
+                  <option value="1. Motherboard">1. Motherboard</option>
+                  <option value="--- X870 / Z890 ---">--- X870 / Z890 ---</option>
+                  <option value="2. Graphics Card">2. Graphics Card</option>
+                  <option value="--- RTX 50 ---">--- RTX 50 ---</option>
+                  <option value="3. Monitor">3. Monitor</option>
+                  <option value="4. Laptop">4. Laptop</option>
+                  <option value="AI TOP & Desktop PC (model name)">AI TOP & Desktop PC (model name)</option>
+                  <option value="[CES 2025] media+ 其他活動觀測">[CES 2025] media+ 其他活動觀測</option>
+                  <option value="[COMPUTEX 2025] media">[COMPUTEX 2025] media</option>
+                  <option value="活動觀測">活動觀測</option>
+                  <option value="Reddit">Reddit</option>
+                  <option value="custom">自訂 tab</option>
+                </select>
+              </label>
+
+              <label class="hidden" id="customTabWrap">
+                <span>自訂 Tab</span>
+                <input id="customTab" name="customTab" type="text" placeholder="輸入 tab 名稱" />
+              </label>
+
+              <label>
+                <span>Chart</span>
+                <select id="chart" name="chart">
+                  <option value="Media Reach Share (Overall)" selected>Media Reach Share (Overall)</option>
+                  <option value="Total Mention Share (Overall)">Total Mention Share (Overall)</option>
+                  <option value="Total Reach Share (Overall)">Total Reach Share (Overall)</option>
+                  <option value="Media Mention Share (Overall)">Media Mention Share (Overall)</option>
+                  <option value="Media Reach over time (Overall)">Media Reach over time (Overall)</option>
+                  <option value="custom">自訂 chart</option>
+                </select>
+              </label>
+
+              <label class="hidden" id="customChartWrap">
+                <span>自訂 Chart</span>
+                <input id="customChart" name="customChart" type="text" placeholder="輸入 chart 標題" />
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Return</legend>
+            <div class="return-grid">
+              <label class="check-row">
+                <input id="returnPercent" name="returnPercent" type="checkbox" checked />
+                <span>百分比</span>
+              </label>
+              <label class="check-row">
+                <input id="returnSeries" name="returnSeries" type="checkbox" checked />
+                <span>Series 1 數字</span>
+              </label>
+              <label>
+                <span>品牌篩選</span>
+                <select id="brandFilter" name="brandFilter">
+                  <option value="all" selected>全部品牌</option>
+                  <option value="Brand - ASUS">Brand - ASUS</option>
+                  <option value="Brand - GIGABYTE">Brand - GIGABYTE</option>
+                  <option value="Brand - MSI">Brand - MSI</option>
+                  <option value="custom">自訂品牌</option>
+                </select>
+              </label>
+              <label class="hidden" id="customBrandWrap">
+                <span>自訂品牌</span>
+                <input id="customBrand" name="customBrand" type="text" placeholder="例如 Brand - AORUS" />
+              </label>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <section class="panel output-panel" aria-labelledby="outputTitle">
+        <div class="output-header">
+          <h2 id="outputTitle">產生的指令</h2>
+          <button id="copyButton" type="button">Copy</button>
+        </div>
+        <textarea id="promptOutput" readonly spellcheck="false"></textarea>
+        <div class="status-line" id="statusLine" role="status">已準備好產生 Brandwatch extract 指令。</div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
